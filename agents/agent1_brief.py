@@ -138,6 +138,12 @@ def generar_brief(datos_campana: dict) -> dict:
     datos_campana["knowledge"] = knowledge
     print(f"[Agente 1] ✅ Knowledge cargado: {list(knowledge.keys())}")
 
+    # 2.5 Research web de keywords y competidores
+    print("[Agente 1] Buscando keywords y competidores en la web...")
+    research = _buscar_keywords_y_competidores(client, datos_campana)
+    datos_campana["research"] = research
+    print("[Agente 1] Research completado")
+
     # 3. Generar brief con Claude
     prompt = _construir_prompt(datos_campana)
     print(f"[Agente 1] 🤖 Generando brief con Claude...")
@@ -177,6 +183,53 @@ def generar_brief(datos_campana: dict) -> dict:
         "Estado":    "pendiente_aprobacion",
     }
 
+
+
+def _buscar_keywords_y_competidores(client, datos_campana: dict) -> dict:
+    objetivo = datos_campana.get("objetivo", "")
+    plataformas = datos_campana.get("plataformas", "")
+    mercados = datos_campana.get("mercados", "Espana")
+    nombre = datos_campana.get("nombre", "")
+
+    prompt_research = f"""Eres un experto en paid marketing digital. Haz research real para una campana de seQura (BNPL fintech espanola).
+
+CAMPANA: {nombre}
+OBJETIVO: {objetivo}
+PLATAFORMAS: {plataformas}
+MERCADOS: {mercados}
+
+Busca en la web y proporciona:
+
+1. KEYWORDS REALES para paid search y social en Espana:
+   - Keywords mas relevantes para BNPL en Espana con volumen y tendencia
+   - Keywords de marca, genericas y de competidores
+   - Keywords en espanol relevantes para el objetivo
+
+2. ANALISIS DE COMPETIDORES ACTUAL:
+   - Anuncios activos de Klarna, Scalapay, PayPal y Revolut en Espana
+   - Mensajes, formatos y creatividades que estan usando AHORA
+   - Oportunidades de diferenciacion para seQura
+
+Responde con secciones claras:
+## KEYWORDS RESEARCH
+## ANALISIS COMPETIDORES ACTUAL
+"""
+
+    try:
+        message = client.messages.create(
+            model="claude-sonnet-4-20250514",
+            max_tokens=3000,
+            tools=[{"type": "web_search_20250305", "name": "web_search"}],
+            messages=[{"role": "user", "content": prompt_research}]
+        )
+        research_text = ""
+        for block in message.content:
+            if hasattr(block, "text"):
+                research_text += block.text
+        return {"raw": research_text}
+    except Exception as e:
+        print(f"Web search no disponible: {e}")
+        return {"raw": ""}
 
 def _construir_prompt(datos_campana: dict) -> str:
     return f"""Eres el Sub-agente 1 del pipeline de campañas paid marketing de seQura.
