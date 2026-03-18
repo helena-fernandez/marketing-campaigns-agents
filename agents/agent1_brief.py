@@ -226,7 +226,7 @@ Responde con secciones claras:
         for block in message.content:
             if hasattr(block, "text"):
                 research_text += block.text
-        return {"raw": research_text}
+        return {"raw": research_text[:3000]}  # Limitar a 3000 caracteres
     except Exception as e:
         print(f"Web search no disponible: {e}")
         return {"raw": ""}
