@@ -250,7 +250,8 @@ Tu tarea es generar un brief de campaña completo y profesional.
 - Qué NO queremos parecer: {datos_campana.get('no_queremos_parecer', 'Ver guía de marca')}
 - Qué SÍ queremos proyectar: {datos_campana.get('si_queremos_proyectar', 'Ver guía de marca')}
 - Aprendizajes previos: {datos_campana.get('aprendizajes_previos', 'Primera campaña')}
-
+=== RESEARCH WEB (keywords y competidores activos) ===
+{datos_campana.get('research', {}).get('raw', 'No disponible')}
 === GUÍA DE MARCA Y VOZ ===
 {BRAND_VOICE}
 
@@ -267,9 +268,9 @@ Tu tarea es generar un brief de campaña completo y profesional.
 1. Genera el brief COMPLETO con todas las secciones. No omitas ninguna.
 2. Usa datos reales de seQura (2.5M shoppers, 6.000 tiendas, datos de recurrencia, etc.)
 3. Si un dato no está disponible escribe: "PENDIENTE — confirmar antes del kick-off"
-4. Para la sección 7, añade las URLs de Meta Ads Library de cada competidor para revisión manual.
-5. Genera keywords reales y relevantes para el sector BNPL en los mercados indicados.
-6. Escribe en español. Tono: profesional pero cercano, directo, basado en datos.
+4. Para la sección 6 (Keywords), usa el RESEARCH WEB de arriba. Si contiene keywords reales, úsalos. Busca las keywords mas usadas de empresas BNPL.
+5. Para la sección 7, añade las URLs de Meta Ads Library de cada competidor para revisión manual.
+6. Para la sección 8 (Insights), sintetiza los insights más relevantes a partir del research y los datos de campaña. Nunca dejes esta sección en PENDIENTE.
 7. Usa ## para secciones principales y ### para subsecciones.
 8. El output debe estar listo para entregar al equipo creativo tras un kick-off de 15 minutos.
 
