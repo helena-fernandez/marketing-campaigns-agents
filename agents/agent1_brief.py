@@ -135,9 +135,13 @@ def generar_brief(datos_campana: dict) -> dict:
     # 2. Cargar knowledge base de Airtable
     print(f"[Agente 1] 📚 Cargando knowledge base...")
     knowledge = obtener_knowledge()
+    # Truncar knowledge base para no exceder tokens
+    for key in knowledge:
+        if isinstance(knowledge[key], str) and len(knowledge[key]) > 1000:
+            knowledge[key] = knowledge[key][:1000]
     datos_campana["knowledge"] = knowledge
     print(f"[Agente 1] ✅ Knowledge cargado: {list(knowledge.keys())}")
-
+   
     # 2.5 Research web de keywords y competidores
     print("[Agente 1] Buscando keywords y competidores en la web...")
     research = _buscar_keywords_y_competidores(client, datos_campana)
