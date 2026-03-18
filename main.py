@@ -1,6 +1,7 @@
 import anthropic
 import json
 from datetime import datetime
+import time
 from config.settings import ANTHROPIC_API_KEY, CLAUDE_MODEL
 
 client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
@@ -156,6 +157,7 @@ def _procesar_accion(json_str: str, estado_pipeline: dict) -> dict:
             if not datos.get("id_campana"):
                 datos["id_campana"] = f"CAMP-{datetime.now().strftime('%Y%m%d-%H%M')}"
 
+            time.sleep(60)
             resultado = generar_brief(datos)
 
             print("\n" + "─"*60)
