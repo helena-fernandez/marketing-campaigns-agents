@@ -5,7 +5,7 @@ load_dotenv()
 
 # Anthropic
 ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")
-CLAUDE_MODEL = "claude-sonnet-4-20250514"
+CLAUDE_MODEL = "claude-haiku-4-5-20251001"
 
 # Airtable
 AIRTABLE_API_KEY = os.getenv("AIRTABLE_API_KEY")
