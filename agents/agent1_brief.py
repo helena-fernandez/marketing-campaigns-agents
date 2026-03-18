@@ -137,8 +137,8 @@ def generar_brief(datos_campana: dict) -> dict:
     knowledge = obtener_knowledge()
     # Truncar knowledge base para no exceder tokens
     for key in knowledge:
-        if isinstance(knowledge[key], str) and len(knowledge[key]) > 1000:
-            knowledge[key] = knowledge[key][:1000]
+        if isinstance(knowledge[key], str) and len(knowledge[key]) > 500:
+            knowledge[key] = knowledge[key][:500]
     datos_campana["knowledge"] = knowledge
     print(f"[Agente 1] ✅ Knowledge cargado: {list(knowledge.keys())}")
    
@@ -230,7 +230,7 @@ Responde con secciones claras:
         for block in message.content:
             if hasattr(block, "text"):
                 research_text += block.text
-        return {"raw": research_text[:3000]}  # Limitar a 3000 caracteres
+        return {"raw": research_text[:1500]}  # Limitar a 1500 caracteres
     except Exception as e:
         print(f"Web search no disponible: {e}")
         return {"raw": ""}
